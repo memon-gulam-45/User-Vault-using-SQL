@@ -76,6 +76,18 @@ router.patch("/user/:id", (req, res) => {
   );
 });
 
+/* Delete FORM */
+router.get("/user/:id/delete", (req, res) => {
+  connection.query(
+    "SELECT * FROM user WHERE id = ?",
+    [req.params.id],
+    (err, result) => {
+      if (err) return res.send("DB Error");
+      res.render("delete", { user: result[0] });
+    }
+  );
+});
+
 /* DELETE USER */
 router.delete("/user/:id", (req, res) => {
   const { password } = req.body;
@@ -89,10 +101,8 @@ router.delete("/user/:id", (req, res) => {
 
       if (!match) return res.send("Wrong password");
 
-      connection.query(
-        "DELETE FROM user WHERE id = ?",
-        [req.params.id],
-        () => res.redirect("/user")
+      connection.query("DELETE FROM user WHERE id = ?", [req.params.id], () =>
+        res.redirect("/user")
       );
     }
   );

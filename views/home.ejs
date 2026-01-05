@@ -3,16 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Page</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Home</title>
 
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
   </head>
-  <body>
-    <h2>The Total Numbers of Users Are : <%=count%></h2>
-    <button>Join Us Today!</button> <br />
-    <br />
-    <form method="get" action="/user/add">
-      <button>Add New User</button>
-    </form>
+
+  <body class="font-sans bg-slate-100 text-slate-700">
+    <div class="min-h-screen flex items-center justify-center p-4">
+      <div
+        class="bg-white w-full max-w-md rounded-xl border border-slate-200 shadow-sm p-8 space-y-6 text-center"
+      >
+        <h1 class="text-2xl font-semibold text-slate-800">User Vault</h1>
+
+        <div class="bg-slate-50 rounded-lg p-4">
+          <p class="text-sm text-slate-500">Total Users</p>
+          <p class="text-3xl font-bold text-indigo-600"><%= count %></p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <a
+            href="/user/add"
+            class="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-lg font-medium transition"
+          >
+            Add New User
+          </a>
+
+          <a
+            href="/user"
+            class="inline-flex items-center justify-center bg-slate-900 hover:bg-slate-800 text-white py-2.5 rounded-lg font-medium transition"
+          >
+            Show Users
+          </a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

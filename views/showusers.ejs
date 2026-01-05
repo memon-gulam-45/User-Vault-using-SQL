@@ -3,45 +3,137 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>All Users</title>
-    <style>
-      table,
-      th,
-      td {
-        border: 1px solid black;
-      }
-    </style>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Users</title>
 
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
   </head>
-  <body>
-    <form method="get" action="/user/add">
-      <button>Add New User</button>
-    </form>
-    <br />
-    <table>
-      <tr>
-        <th>ID</th>
-        <th>Email</th>
-        <th>Username</th>
-      </tr>
-      <% for(user of users){ %>
-      <tr>
-        <td><%=user.id%></td>
-        <td><%=user.email%></td>
-        <td><%=user.username%></td>
-        <td>
-          <form method="GET" action="/user/<%=user.id%>/edit">
-            <button>Edit Username</button>
-          </form>
-        </td>
-        <td>
-          <form method="GET" action="/user/<%=user.id%>/delete">
-            <button>Delete User</button>
-          </form>
-        </td>
-      </tr>
+
+  <body class="font-sans bg-slate-100 text-slate-700">
+    <div class="max-w-6xl mx-auto p-4 space-y-6">
+      <!-- Header -->
+      <div
+        class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+      >
+        <h2 class="text-2xl font-semibold text-slate-800">All Users</h2>
+
+        <a
+          href="/user/add"
+          class="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition"
+        >
+          Add User
+        </a>
+      </div>
+
+      <!-- Desktop Table -->
+      <div
+        class="hidden md:block bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+      >
+        <table class="w-full">
+          <thead class="bg-slate-50">
+            <tr>
+              <th
+                class="text-left text-sm font-medium text-slate-600 px-4 py-3"
+              >
+                Email
+              </th>
+              <th
+                class="text-left text-sm font-medium text-slate-600 px-4 py-3"
+              >
+                Username
+              </th>
+              <th
+                class="text-right text-sm font-medium text-slate-600 px-4 py-3"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+
+          <tbody class="divide-y divide-slate-200">
+            <% for (user of users) { %>
+            <tr class="hover:bg-slate-50 transition">
+              <td class="px-4 py-3"><%= user.email %></td>
+              <td class="px-4 py-3"><%= user.username %></td>
+              <td class="px-4 py-3 text-right space-x-4">
+                <a
+                  href="/user/<%= user.id %>/edit"
+                  class="text-indigo-600 hover:underline"
+                >
+                  Edit
+                </a>
+                <a
+                  href="/user/<%= user.id %>/delete"
+                  class="text-rose-600 hover:underline"
+                >
+                  Delete
+                </a>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Cards -->
+      <div class="md:hidden space-y-4">
+        <% for (user of users) { %>
+        <div
+          class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 space-y-2"
+        >
+          <div>
+            <p class="text-sm text-slate-500">Email</p>
+            <p class="font-medium"><%= user.email %></p>
+          </div>
+
+          <div>
+            <p class="text-sm text-slate-500">Username</p>
+            <p class="font-medium"><%= user.username %></p>
+          </div>
+
+          <div class="flex gap-4 pt-2">
+            <a
+              href="/user/<%= user.id %>/edit"
+              class="text-indigo-600 font-medium"
+            >
+              Edit
+            </a>
+            <a
+              href="/user/<%= user.id %>/delete"
+              class="text-rose-600 font-medium"
+            >
+              Delete
+            </a>
+          </div>
+        </div>
+        <% } %>
+      </div>
+
+      <!-- Empty State (optional) -->
+      <% if (users.length === 0) { %>
+      <div class="text-center text-slate-500 py-10">
+        No users found. Add your first user.
+      </div>
       <% } %>
-    </table>
+    </div>
   </body>
 </html>

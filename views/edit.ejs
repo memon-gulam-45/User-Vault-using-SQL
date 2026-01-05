@@ -3,16 +3,67 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit Username</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Edit User</title>
 
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
   </head>
-  <body>
-    <h2>You are about to edit this user : <%= user.email %></h2>
-    <form method="post" action="/user/<%=user.id%>?_method=PATCH">
-      <textarea name="username"><%= user.username %></textarea><br />
-      <input type="password" name="password" placeholder="Enter Password" />
-      <button>Edit</button>
-    </form>
+
+  <body class="font-sans bg-slate-100 text-slate-700">
+    <div class="min-h-screen flex items-center justify-center p-4">
+      <form
+        method="POST"
+        action="/user/<%= user.id %>?_method=PATCH"
+        class="bg-white w-full max-w-md rounded-xl border border-slate-200 shadow-sm p-6 space-y-5"
+      >
+        <div class="text-center">
+          <h2 class="text-lg font-semibold text-slate-800">Edit User</h2>
+          <p class="text-sm text-slate-500 mt-1">
+            Updating username for <strong><%= user.email %></strong>
+          </p>
+        </div>
+
+        <textarea
+          name="username"
+          rows="3"
+          class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+<%= user.username %></textarea
+        >
+
+        <input
+          class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          type="password"
+          name="password"
+          placeholder="Enter password to confirm"
+          required
+        />
+
+        <button
+          class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2.5 rounded-lg font-medium transition"
+        >
+          Update Username
+        </button>
+      </form>
+    </div>
   </body>
 </html>
