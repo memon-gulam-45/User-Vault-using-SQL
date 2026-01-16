@@ -1,3 +1,6 @@
+const mysql = require("mysql2");
+require("dotenv").config();
+
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -5,5 +8,4 @@ const connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
-const port = process.env.PORT || 8080;
-app.listen(port, () => console.log(`Server running on ${port}`));
+module.exports = connection;
